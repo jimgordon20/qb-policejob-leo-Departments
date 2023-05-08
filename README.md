@@ -9,7 +9,54 @@ To set up these departments, simply customize the config.lua file and add them t
 
 NOTE - --(  In the config, most locations have been set up for my server, mainly Gabz MLO. So please change the config locations to suit your server.  )--
 
+--=============================================================================================================================================================================
 
+framework/qb.lua replace the folowing event
+"PlayerHasGroups" whit the provided code below
+```lua
+function PlayerHasGroups(filter)
+    local _type = type(filter)
+
+    if _type == 'string' then
+        local job = playerData.job.name == filter
+        local jobType = playerData.job.type == filter
+        local gang = playerData.gang.name == filter
+        local citizenId = playerData.citizenid == filter
+
+        if job or gang or citizenId or jobType then
+            return true
+        end
+    elseif _type == 'table' then
+        local tabletype = table.type(filter)
+
+        if tabletype == 'hash' then
+            for name, grade in pairs(filter) do
+                local job = playerData.job.name == name
+                local jobType = playerData.job.type == name
+                local gang = playerData.gang.name == name
+                local citizenId = playerData.citizenid == name
+
+                if job and grade <= playerData.job.grade.level or gang and grade <= playerData.gang.grade.level or citizenId or jobType  then
+                    return true
+                end
+            end
+        elseif tabletype == 'array' then
+            for i = 1, #filter do
+                local name = filter[i]
+                local job = playerData.job.name == name
+                local jobType = playerData.job.type == name
+                local gang = playerData.gang.name == name
+                local citizenId = playerData.citizenid == name
+
+                if job or gang or citizenId or jobType then
+                    return true
+                end
+            end
+        end
+    end
+end
+```
+--=============================================================================================================================================================================
     EXAMPLES BELOW
 
     --=============================================================================================================================================================================
