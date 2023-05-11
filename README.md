@@ -5,6 +5,9 @@
 
 
 -- set up for qs-inventory
+
+
+
 This is a modified version of the qb-policejob that has been made with various police departments. It enables server owners to create multiple departments that have the same features as the police job, allowing them to expand beyond the limitations of the default /setjob police command.
 
 
